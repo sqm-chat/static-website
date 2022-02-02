@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/static-website
+    overwrite: true
+permissions:
+  - object: /home/ubuntu/static-website/*
+    mode: 755
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+hooks:
+  BeforeInstall:
+    - location: deployment-scripts/beforeInstall2-delete-all.sh
+      timeout: 120
+#      runas: root
+  AfterInstall:
+    - location: deployment-scripts/afterInstall1-copy-env.sh
+      timeout: 120
+    - location: deployment-scripts/afterInstall2-start-app.sh
+      timeout: 120
+
